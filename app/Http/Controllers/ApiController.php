@@ -52,9 +52,9 @@ class ApiController extends Controller
             $token =  $user->createToken('MyApiToken')->plainTextToken; 
             $user->api_token = $token;
             $user->save();
-            return response()->json(array('code' => 200,'message' => "Login Successfull",'token' => $token));
+            return response()->json(['code' => 200,'message' => "Login Successfull",'token' => $token]);
         } else{ 
-            return response()->json(array('code' => 401,'message' => "Unauthorised"));
+            return response()->json(['code' => 401,'message' => "Unauthorised"]);
         } 
     }
 
@@ -63,9 +63,9 @@ class ApiController extends Controller
      */
     public function userInformation() {
         if(Auth::check()) {
-            return response()->json(array('code' => 200,'data' => Auth::user()));
+            return response()->json(['code' => 200,'data' => Auth::user()]);
         } else {
-            return response()->json(array('code' => 401,'message' => 'Unauthorised'));
+            return response()->json(['code' => 401,'message' => 'Unauthorised']);
         }
     }
 
@@ -101,11 +101,11 @@ class ApiController extends Controller
      */
     public function makrAsReadAll(){
         if(authUserRole() == 1) {
-            AdminNotification::query()->update(array('mark_as_read_status' => 1));
+            AdminNotification::query()->update(['mark_as_read_status' => 1]);
         } elseif(authUserRole() == 2) {
-            AgentNotification::where('agent_for',authUserId())->update(array('mark_as_read_status' => 1));
+            AgentNotification::where('agent_for',authUserId())->update(['mark_as_read_status' => 1]);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::where('customer_for',authUserId())->update(array('mark_as_read_status' => 1));
+            CustomerNotification::where('customer_for',authUserId())->update(['mark_as_read_status' => 1]);
         }
         return response()->json(['status' => true,'Information has been updated successfully!']);
     }
@@ -115,11 +115,11 @@ class ApiController extends Controller
      */
     public function deleteAll() {
         if(authUserRole() == 1) {
-            AdminNotification::query()->update(array('del_status' => 'DELETED'));
+            AdminNotification::query()->update(['del_status' => 'DELETED']);
         } elseif(authUserRole() == 2) {
-            AgentNotification::where('agent_for',authUserId())->update(array('del_status' => 'DELETED'));
+            AgentNotification::where('agent_for',authUserId())->update(['del_status' => 'DELETED']);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::where('customer_for',authUserId())->update(array('del_status' => 'DELETED'));
+            CustomerNotification::where('customer_for',authUserId())->update(['del_status' => 'DELETED']);
         }
         return response()->json(['status' => true,'Information has been deleted successfully!']);
     }
@@ -130,11 +130,11 @@ class ApiController extends Controller
      */
     public function markAsRead($id){
         if(authUserRole() == 1) {
-            AdminNotification::find($id)->update(array('mark_as_read_status' => 1));
+            AdminNotification::find($id)->update(['mark_as_read_status' => 1]);
         } elseif(authUserRole() == 2) {
-            AgentNotification::find($id)->update(array('mark_as_read_status' => 1));
+            AgentNotification::find($id)->update(['mark_as_read_status' => 1]);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::find($id)->update(array('mark_as_read_status' => 1));
+            CustomerNotification::find($id)->update(['mark_as_read_status' => 1]);
         }
         return response()->json(['status' => true,'Information has been updated successfully!']);
     }
@@ -145,11 +145,11 @@ class ApiController extends Controller
      */
     public function deleteNotification($id){
         if(authUserRole() == 1) {
-            AdminNotification::find($id)->update(array('del_status' => 'DELETED'));
+            AdminNotification::find($id)->update(['del_status' => 'DELETED']);
         } elseif(authUserRole() == 2) {
-            AgentNotification::find($id)->update(array('del_status' => 'DELETED'));
+            AgentNotification::find($id)->update(['del_status' => 'DELETED']);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::find($id)->update(array('del_status' => 'DELETED'));
+            CustomerNotification::find($id)->update(['del_status' => 'DELETED']);
         }
         return response()->json(['status' => true,'Information has been deleted successfully!']);
     }

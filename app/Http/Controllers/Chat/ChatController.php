@@ -138,12 +138,12 @@ class ChatController extends Controller
                     $this->callEventInSingleChat($from_id, $to_id, $row);
                     return response()->json(['status' => true]);
                 } else {
-                    return response()->json(array('status' => false));
+                    return response()->json(['status' => false]);
                 }
             }
 
         } else {
-            return response()->json(array('status' => false));
+            return response()->json(['status' => false]);
         }
     }
 
@@ -190,9 +190,9 @@ class ChatController extends Controller
      */
     public function singleSeenStatusUpdate()
     {
-        $condition = array('from_id' => request()->get('to_id'), 'to_id' => Auth::id(), 'seen_status' => 0);
+        $condition = ['from_id' => request()->get('to_id'), 'to_id' => Auth::id(), 'seen_status' => 0];
         $count = SingleChatMessage::where($condition)->count();
-        SingleChatMessage::where($condition)->update(array('seen_status' => request()->get('status')));
+        SingleChatMessage::where($condition)->update(['seen_status' => request()->get('status')]);
         event(new MakeSeen("single", request()->get('to_id')));
         return response()->json(['total' => $count]);
     }
@@ -216,7 +216,7 @@ class ChatController extends Controller
             event(new MakeSeen("group", $target_user));
         }
         if ($count > 0) {
-            GroupChatMessage::where($condition)->where('from_id', '!=', authUserId())->update(array('seen_status' => request()->get('status')));
+            GroupChatMessage::where($condition)->where('from_id', '!=', authUserId())->update(['seen_status' => request()->get('status')]);
             return response()->json(['total' => $count, 'status' => true]);
         } else {
             return response()->json(['total' => $count, 'status' => false]);
@@ -472,7 +472,7 @@ class ChatController extends Controller
                     if ($from_type == "Admin" || $from_type == "Agent") {
                         if (!GroupChatMessage::where('group_id', $group_id)->where('user_type', "Admin")->orWhere('user_type', "Agent")->exists()) {
                             $g_mail_data = [
-                                'to' => array($group_info->guest_user_email),
+                                'to' => [$group_info->guest_user_email],
                                 'subject' => "New chat message on " . siteSetting()->company_name ?? '',
                                 'body' => "There is a new chat message on " . siteSetting()->company_name . " by " . authUserType() . " on " . currentDate() . " at " . currentTime() . ". Please visit the site and check your inbox.",
                                 'chat_message' => $row->message,
@@ -491,7 +491,7 @@ class ChatController extends Controller
             }
             return response()->json(['status' => true, 'is_verified' => ($is_verified), 'need_validation' => ($need_validation), 'chat_type' => ($chat_type), 'need_show_agent_button' => $need_show_agent_button, 'need_close_chat' => $need_close_chat, 'message' => $request->message, 'product' => ProductCategory::find($product_id)->title, 'product_id' => $product_id, 'group_id' => $group_id]);
         } else {
-            return response()->json(array('status' => false));
+            return response()->json(['status' => false]);
         }
     }
 
@@ -606,14 +606,14 @@ class ChatController extends Controller
         $file_name = $group->name;
 
         if (count($chat_history)) {
-            $data_array[] = array('User Type', 'Message', 'Time');
+            $data_array[] = ['User Type', 'Message', 'Time'];
 
             foreach ($chat_history as $chat) {
-                $data_array[] = array(
+                $data_array[] = [
                     'User Type' => $chat->user_type,
                     'Message' => $chat->message,
                     'Time' => $chat->created_at->format('Y-m-d h:i A'),
-                );
+                ];
             }
             $this->saveExcel($data_array, $file_name); // Save the excel file
 
@@ -625,7 +625,7 @@ class ChatController extends Controller
                     $customer_email = User::whereIn('id', $group_members)->where('type', 'Customer')->first()->email;
                     if (isset($customer_email)) {
                         $mail_data = [
-                            'to' => array($customer_email),
+                            'to' => [$customer_email],
                             'subject' => MailTemplate::chatMailData('customer', $customer_email, 'subject', $group_id),
                             'body' => MailTemplate::chatMailData('customer', $customer_email, 'body', $group_id),
                             'file_name' => $file_name . '.xls',
@@ -638,7 +638,7 @@ class ChatController extends Controller
 
                     if (isset($group->guest_user_email)) {
                         $mail_data = [
-                            'to' => array($group->guest_user_email),
+                            'to' => [$group->guest_user_email],
                             'subject' => "Your chat transcript from " . siteSetting()->company_name ?? '',
                             'body' => "A chat has been closed on " . siteSetting()->company_name . " by " . authUserType() . " on " . currentDate() . " at " . currentTime() . " You can open another chat if you have further query.",
                             'file_name' => $file_name . '.xls',
@@ -653,7 +653,7 @@ class ChatController extends Controller
                 $admin_agent_emails = User::whereIn('id', $group_members)->where('type', '!=', 'Customer')->pluck('email');
                 foreach ($admin_agent_emails as $email) {
                     $mail_data = [
-                        'to' => array($email),
+                        'to' => [$email],
                         'subject' => MailTemplate::chatMailData('admin_agent', $email, 'subject', $group_id),
                         'body' => MailTemplate::chatMailData('admin_agent', $email, 'body', $group_id),
                         'file_name' => $file_name . '.xls',
@@ -669,7 +669,7 @@ class ChatController extends Controller
         Session::forget('is_agent_connected');
         Session::forget('is_verified');
         // Delete group and group message
-        GroupChatMessage::whereIn('group_id', array($group_id))->delete();
+        GroupChatMessage::whereIn('group_id', [$group_id])->delete();
         $group->delete();
         return Redirect::to('/live-chat')->with(updateMessage("Chat has been closed successfully!"));
     }

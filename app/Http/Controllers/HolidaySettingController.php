@@ -45,7 +45,7 @@ class HolidaySettingController extends Controller
     {
         $title = __('index.add_holiday');
         $route = route('holiday-setting.store');
-        $days = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
+        $days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
         return view('vacation.holiday_add_edit',compact('title','days','route'));
     }
 
@@ -94,7 +94,7 @@ class HolidaySettingController extends Controller
         $title = __('index.edit_holiday');
         $data = HolidaySetting::findOrFail(encrypt_decrypt($id,'decrypt'));
         $route = route('holiday-setting.update',$id);
-        $days = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
+        $days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
         return view('vacation.holiday_add_edit',compact('title','days','route','data'));
 
     }

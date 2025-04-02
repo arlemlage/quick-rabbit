@@ -502,7 +502,7 @@ class FrontendController extends Controller
         ]);
 
         $mail_data = [
-            'to' => array(siteSetting()->email),
+            'to' => [siteSetting()->email],
             'subject' => $request->subject . " (" . smtpInfo()['from_name'] . ")",
             'reply_to' => $request->email,
             'from_name' => $request->name,
@@ -969,7 +969,7 @@ class FrontendController extends Controller
 
             return response()->json(['status' => true, 'is_verified' => ($is_verified), 'need_validation' => ($need_validation), 'chat_type' => ($chat_type), 'need_show_agent_button' => $need_show_agent_button, 'need_close_chat' => $need_close_chat, 'message' => $request->message, 'product' => ProductCategory::find($request->product_id)->title, 'product_id' => $request->product_id, 'group_id' => $group_id]);
         } else {
-            return response()->json(array('status' => false, 'message' => 'Message not sent!'));
+            return response()->json(['status' => false, 'message' => 'Message not sent!']);
         }
     }
 
@@ -1071,7 +1071,7 @@ class FrontendController extends Controller
         if (isset($target_user)) {
             $from_id = $target_user->from_id;
             event(new MakeSeen("group", $from_id));
-            GroupChatMessage::where($condition)->where('from_id', '!=', 0)->update(array('seen_status' => 1));
+            GroupChatMessage::where($condition)->where('from_id', '!=', 0)->update(['seen_status' => 1]);
             return response()->json(['total' => $count, 'status' => true]);
         }
 
@@ -1087,14 +1087,14 @@ class FrontendController extends Controller
         $file_name = $group->created_by + '' + time();
 
         if (count($chat_history)) {
-            $data_array[] = array('User Type', 'Message', 'Time');
+            $data_array[] = ['User Type', 'Message', 'Time'];
 
             foreach ($chat_history as $chat) {
-                $data_array[] = array(
+                $data_array[] = [
                     'User Type' => $chat->user_type,
                     'Message' => $chat->message,
                     'Time' => $chat->created_at->format('Y-m-d h:i A'),
-                );
+                ];
             }
             $this->saveExcel($data_array, $file_name);
 
@@ -1106,7 +1106,7 @@ class FrontendController extends Controller
                     $customer_email = User::whereIn('id', $group_members)->where('type', 'Customer')->first();
                     if (isset($customer)) {
                         $mail_data = [
-                            'to' => array($customer->email),
+                            'to' => [$customer->email],
                             'subject' => MailTemplate::chatMailData('customer', $customer_email, 'subject', $group_id),
                             'body' => MailTemplate::chatMailData('customer', $customer_email, 'body', $group_id),
                             'file_name' => $file_name . '.xls',
@@ -1121,7 +1121,7 @@ class FrontendController extends Controller
                 $admin_agent_emails = User::whereIn('id', $group_members)->where('type', '!=', 'Customer')->pluck('email');
                 foreach ($admin_agent_emails as $email) {
                     $mail_data = [
-                        'to' => array($email),
+                        'to' => [$email],
                         'subject' => MailTemplate::chatMailData('admin_agent', $email, 'subject', $group_id),
                         'body' => MailTemplate::chatMailData('admin_agent', $email, 'body', $group_id),
                         'file_name' => $file_name . '.xls',
@@ -1134,7 +1134,7 @@ class FrontendController extends Controller
             // Send mail to guest email
             if ($group->user_type == 'guest' && $group->guest_user_email != null) {
                 $mail_data = [
-                    'to' => array($group->guest_user_email),
+                    'to' => [$group->guest_user_email],
                     'subject' => "Your chat transcript from " . siteSetting()->company_name ?? '',
                     'body' => "A chat has been closed on " . siteSetting()->company_name . " by " . authUserType() . " on " . currentDate() . " at " . currentTime() . " You can open another chat if you have further query.",
                     'file_name' => $file_name . '.xls',
@@ -1148,7 +1148,7 @@ class FrontendController extends Controller
         Session::forget('chat_type');
         Session::forget('is_agent_connected');
         Session::forget('is_verified');
-        GroupChatMessage::whereIn('group_id', array($group_id))->delete();
+        GroupChatMessage::whereIn('group_id', [$group_id])->delete();
         $group->delete();
         return redirect()->route('home');
     }

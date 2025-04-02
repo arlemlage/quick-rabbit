@@ -116,7 +116,7 @@ class SocialLoginController extends Controller
                     Auth::loginUsingId($user_id);
                 }
             } else {
-                $identify = array('google_id' => $g_user->id,'email' => $g_user->email);
+                $identify = ['google_id' => $g_user->id,'email' => $g_user->email];
                 $tmp_password = substr(md5(uniqid(random_int(0, 50), true)), 0, 6);
                 $customer_full_name = (explode(' ',$g_user->name)[0] ?? 'First Name')." ". explode(' ',$g_user->name)[1] ?? "Last Name";
                 $data = [
@@ -134,7 +134,7 @@ class SocialLoginController extends Controller
                 ];
 
                 $mail_data = [
-                    'to' => array('name'=>"",'email'=>$g_user->email),
+                    'to' => ['name'=>"",'email'=>$g_user->email],
                     'subject' => "Temporary login credentials",
                     'user_name' => $customer_full_name,
                     'body' => 'Your temporary login credentials have been given below. Please login into your account and change your password.',
@@ -182,7 +182,7 @@ class SocialLoginController extends Controller
                     Auth::loginUsingId($user_id);
                 }
             } else {
-                 $identify = array('github_id' => $gh_user->id,'email' => $gh_user->email);
+                 $identify = ['github_id' => $gh_user->id,'email' => $gh_user->email];
                  $tmp_password = substr(md5(uniqid(random_int(0, 50), true)), 0, 6);
                  $customer_full_name = (explode(' ',$gh_user->name)[0] ?? 'First Name')." ". explode(' ',$gh_user->name)[1] ?? "Last Name";
                 $data = [
@@ -204,7 +204,7 @@ class SocialLoginController extends Controller
 
 
                 $mail_data = [
-                    'to' => array('name'=>"",'email'=>$gh_user->email),
+                    'to' => ['name'=>"",'email'=>$gh_user->email],
                     'subject' => "Temporary login credentials",
                     'user_name' => $customer_full_name,
                     'body' => 'Your temporary login credentials have been given below. Please login into your account and change your password.',
@@ -251,7 +251,7 @@ class SocialLoginController extends Controller
                     Auth::loginUsingId($user_id);
                 }
             } else {
-                $identify = array('linkedin_id' => $ln_user->id,'email' => $ln_user->email);
+                $identify = ['linkedin_id' => $ln_user->id,'email' => $ln_user->email];
                 $tmp_password = substr(md5(uniqid(random_int(0, 50), true)), 0, 6);
                 $customer_full_name = (explode(' ',$ln_user->name)[0] ?? 'First Name')." ". explode(' ',$ln_user->name)[1] ?? "Last Name";
 
@@ -269,7 +269,7 @@ class SocialLoginController extends Controller
                     'need_change_password' => false,
                 ];
                 $mail_data = [
-                    'to' => array('name'=>"",'email'=>$ln_user->email),
+                    'to' => ['name'=>"",'email'=>$ln_user->email],
                     'subject' => "Temporary login credentials",
                     'user_name' => $customer_full_name,
                     'body' => 'Your temporary login credentials have been given below. Please login into your account and change your password.',
@@ -317,7 +317,7 @@ class SocialLoginController extends Controller
                     Auth::loginUsingId($user_id);
                 }
             } else {
-                $identify = array('envato_id' => $en_user->id,'email' => $en_user->email);
+                $identify = ['envato_id' => $en_user->id,'email' => $en_user->email];
                 $tmp_password = substr(md5(uniqid(random_int(0, 50), true)), 0, 6);
                 $customer_full_name = (explode(' ',$en_user->name)[0] ?? 'First Name')." ". explode(' ',$en_user->name)[1] ?? "Last Name";
 
@@ -336,7 +336,7 @@ class SocialLoginController extends Controller
                 ];
 
                 $mail_data = [
-                    'to' => array('name'=>"",'email'=>$en_user->email),
+                    'to' => ['name'=>"",'email'=>$en_user->email],
                     'subject' => "Temporary login credentials",
                     'user_name' => $customer_full_name,
                     'body' => 'Your temporary login credentials have been given below. Please login into your account and change your password.',

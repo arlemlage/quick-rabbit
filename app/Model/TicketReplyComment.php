@@ -27,7 +27,7 @@ class TicketReplyComment extends Model
     protected $table = "tbl_ticket_reply_comments";
     protected $guarded = [];
     public $timestamps = true;
-    protected $observables = array('sendCCMail','notifyAdminAgent','notifyAgentCustomer','notifyAdminCustomer');
+    protected $observables = ['sendCCMail','notifyAdminAgent','notifyAgentCustomer','notifyAdminCustomer'];
 
     /**
      * Fire CC Mail send observer

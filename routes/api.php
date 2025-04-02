@@ -266,7 +266,7 @@ Route::get('envato-validation', function () {
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; Envato API Wrapper PHP)');
-                $header = array();
+                $header = [];
                 $header[] = 'Content-length: 0';
                 $header[] = 'Content-type: application/json';
                 $header[] = 'Authorization: Bearer ' . $api_key;
@@ -418,7 +418,7 @@ Route::post('forum-like-unlike-post', function (Request $request) {
     if ($type != 'reply' || $type == null) {
         $check_old_like_unlick_status = checkLikeUnlikeStatus(encrypt_decrypt($id, 'decrypt'), $brower_id);
 
-        $ruturn_status = array();
+        $ruturn_status = [];
         $ruturn_status['status'] = false;
 
         if ((isset($check_old_like_unlick_status) && $check_old_like_unlick_status->status == 1 && $status == 1)) {
@@ -437,12 +437,12 @@ Route::post('forum-like-unlike-post', function (Request $request) {
                 $row->forum_id = encrypt_decrypt($id, 'decrypt');
                 $row->save();
                 //increment the like counter
-                Forum::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(array('total_like_counter' => ($current_total + 1)));
+                Forum::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(['total_like_counter' => ($current_total + 1)]);
             } else {
 
                 $ruturn_status['updated_counter'] = $current_total - 1;
                 //decrement the like counter
-                Forum::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(array('total_like_counter' => ($current_total - 1)));
+                Forum::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(['total_like_counter' => ($current_total - 1)]);
                 //update delete status
                 $id = encrypt_decrypt($id, 'decrypt');
                 $obj = ForumLike::where("forum_id", $id)->where("del_status", "Live")->first();
@@ -455,7 +455,7 @@ Route::post('forum-like-unlike-post', function (Request $request) {
     } else {
         $check_old_like_unlick_status = checkLikeUnlikeStatusForComment(encrypt_decrypt($id, 'decrypt'), $brower_id);
 
-        $ruturn_status = array();
+        $ruturn_status = [];
         $ruturn_status['status'] = false;
 
         if ((isset($check_old_like_unlick_status) && $check_old_like_unlick_status->status == 1 && $status == 1)) {
@@ -474,12 +474,12 @@ Route::post('forum-like-unlike-post', function (Request $request) {
                 $row->forum_comment_id = encrypt_decrypt($id, 'decrypt');
                 $row->save();
                 //increment the like counter
-                ForumComment::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(array('total_like_counter' => ($current_total + 1)));
+                ForumComment::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(['total_like_counter' => ($current_total + 1)]);
             } else {
 
                 $ruturn_status['updated_counter'] = $current_total - 1;
                 //decrement the like counter
-                ForumComment::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(array('total_like_counter' => ($current_total - 1)));
+                ForumComment::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(['total_like_counter' => ($current_total - 1)]);
                 //update delete status
                 $id = encrypt_decrypt($id, 'decrypt');
                 $obj = ForumLike::where("forum_comment_id", $id)->where("del_status", "Live")->first();
@@ -496,22 +496,22 @@ Route::post('forum-like-unlike-post', function (Request $request) {
 Route::put('update-config', function () {
     $setting_type = request()->get('setting_type');
     if ($setting_type == "facebook_login") {
-        ConfigurationSetting::first()->update(array('inerest_facebook_login' => false));
+        ConfigurationSetting::first()->update(['inerest_facebook_login' => false]);
     } elseif ($setting_type == "google_login") {
-        ConfigurationSetting::first()->update(array('inerest_google_login' => false));
+        ConfigurationSetting::first()->update(['inerest_google_login' => false]);
     } elseif ($setting_type == "github_login") {
-        ConfigurationSetting::first()->update(array('inerest_github_login' => false));
+        ConfigurationSetting::first()->update(['inerest_github_login' => false]);
     } elseif ($setting_type == "linkedin_login") {
-        ConfigurationSetting::first()->update(array('inerest_linkedin_login' => false));
+        ConfigurationSetting::first()->update(['inerest_linkedin_login' => false]);
     } elseif ($setting_type == "envato_login") {
-        ConfigurationSetting::first()->update(array('inerest_envato_login' => false));
+        ConfigurationSetting::first()->update(['inerest_envato_login' => false]);
     } elseif ($setting_type == "chat_setting") {
-        ConfigurationSetting::first()->update(array('inerest_chat_setting' => false));
+        ConfigurationSetting::first()->update(['inerest_chat_setting' => false]);
     } elseif ($setting_type == "notification_setting") {
-        ConfigurationSetting::first()->update(array('inerest_notification_setting' => false));
+        ConfigurationSetting::first()->update(['inerest_notification_setting' => false]);
     } elseif ($setting_type == "mail_setting") {
-        ConfigurationSetting::first()->update(array('inerest_mail_setting' => false));
+        ConfigurationSetting::first()->update(['inerest_mail_setting' => false]);
     } elseif ($setting_type == "payment_gateway_setting") {
-        ConfigurationSetting::first()->update(array('inerest_payment_gateway_setting' => false));
+        ConfigurationSetting::first()->update(['inerest_payment_gateway_setting' => false]);
     }
 });

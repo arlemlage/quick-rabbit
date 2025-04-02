@@ -266,7 +266,7 @@ class AgentController extends Controller
                     'email' => $request->email
                 ]);
             } else {
-                $obj->update(array('email' => $request->email));
+                $obj->update(['email' => $request->email]);
                 User::sendVerificationEmail($request->email);
                 $obj->is_email_verified = 0;
             }
@@ -278,7 +278,7 @@ class AgentController extends Controller
                     'mobile' => $request->mobile
                 ]);
             } else {
-                $obj->update(array('mobile' => $request->mobile));
+                $obj->update(['mobile' => $request->mobile]);
             }
         }
 

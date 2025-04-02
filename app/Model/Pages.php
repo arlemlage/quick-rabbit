@@ -28,7 +28,7 @@ class Pages extends Model
     protected $table = "tbl_pages";
     protected $guarded = [];
     public $timestamps = true;
-    protected $appends = array('tags','type');
+    protected $appends = ['tags','type'];
 
     protected $searchable = [
         /**

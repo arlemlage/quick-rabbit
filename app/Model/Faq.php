@@ -28,7 +28,7 @@ class Faq extends Model
     protected $table = "tbl_faqs";
     protected $guarded = [];
     public $timestamps = true;
-    protected $appends = array('type');
+    protected $appends = ['type'];
 
      protected $searchable = [
         /**

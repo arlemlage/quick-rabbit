@@ -4,8 +4,8 @@ use Illuminate\Contracts\Validation\Rule;
 class Recaptcha implements Rule {
 
 	public function passes($attribute, $value) {
-		$data = array('secret' => env('GOOGLE_RECAPTCHA_SECRET'),
-			'response' => $value);
+		$data = ['secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+			'response' => $value];
 
 		try {
 			$verify = curl_init();

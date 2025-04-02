@@ -105,15 +105,15 @@ class MailTemplate extends Model
         } elseif ($subject_for == "admin_agent") {
             $mail_sub = $template->admin_agent_mail_subject;
         }
-        $mail_sub = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_sub);
-        $mail_sub = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_sub);
-        $mail_sub = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_sub);
-        $mail_sub = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_sub);
-        $mail_sub = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_sub);
-        $mail_sub = str_replace(array("[agent_name]"), array(getUserName($agent_id)), $mail_sub);
-        $mail_sub = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_sub);
-        $mail_sub = str_replace(array("[user_type]"), array(authUserType()), $mail_sub);
-        $mail_sub = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_sub);
+        $mail_sub = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_sub);
+        $mail_sub = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_sub);
+        $mail_sub = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_sub);
+        $mail_sub = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_sub);
+        $mail_sub = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_sub);
+        $mail_sub = str_replace(["[agent_name]"], [getUserName($agent_id)], $mail_sub);
+        $mail_sub = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_sub);
+        $mail_sub = str_replace(["[user_type]"], [authUserType()], $mail_sub);
+        $mail_sub = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_sub);
         return $mail_sub;
     }
     /**
@@ -128,20 +128,20 @@ class MailTemplate extends Model
             $mail_body = $template->admin_agent_mail_body;
         }
 
-        $mail_body = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_body);
-        $mail_body = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_body);
-        $mail_body = str_replace(array("[ticket_description]"), array($ticket->ticket_content ?? ""), $mail_body);
-        $mail_body = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_body);
-        $mail_body = str_replace(array("[agent_name]"), array(getUserName($agent_id)), $mail_body);
-        $mail_body = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_body);
-        $mail_body = str_replace(array("[user_type]"), array(authUserType()), $mail_body);
-        $mail_body = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_body);
+        $mail_body = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_body);
+        $mail_body = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_body);
+        $mail_body = str_replace(["[ticket_description]"], [$ticket->ticket_content ?? ""], $mail_body);
+        $mail_body = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_body);
+        $mail_body = str_replace(["[agent_name]"], [getUserName($agent_id)], $mail_body);
+        $mail_body = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_body);
+        $mail_body = str_replace(["[user_type]"], [authUserType()], $mail_body);
+        $mail_body = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_body);
         if(!empty($comment_id)) {
             $comment = TicketReplyComment::find($comment_id)->ticket_comment;
             if(isset($comment)) {
-                $mail_body = str_replace(array("[reply]"), array($comment ?? ""), $mail_body);
+                $mail_body = str_replace(["[reply]"], [$comment ?? ""], $mail_body);
             }
         }
         return $mail_body;
@@ -206,9 +206,9 @@ class MailTemplate extends Model
             }
         }
 
-        $mail_data = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_data);
-        $mail_data = str_replace(array("[user_type]"), array($from_type ?? ""), $mail_data);
-        $mail_data = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_data);
+        $mail_data = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_data);
+        $mail_data = str_replace(["[user_type]"], [$from_type ?? ""], $mail_data);
+        $mail_data = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_data);
         return $mail_data;
     }
 
@@ -220,20 +220,20 @@ class MailTemplate extends Model
         $ticket = Ticket::find($comment->ticket_id);
         $mail_subject = $template_info->admin_agent_mail_subject;
 
-        $mail_subject = str_replace(array("EMAIL_ADDRESS"), array($email ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_description]"), array($ticket->ticket_content ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_subject);
-        $mail_subject = str_replace(array("[user_type]"), array(authUserType()), $mail_subject);
-        $mail_subject = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_subject);
+        $mail_subject = str_replace(["EMAIL_ADDRESS"], [$email ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_subject);
+        $mail_subject = str_replace(["[ticket_description]"], [$ticket->ticket_content ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_subject);
+        $mail_subject = str_replace(["[user_type]"], [authUserType()], $mail_subject);
+        $mail_subject = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_subject);
         if(!empty($comment)) {
             $comment = TicketReplyComment::find($comment->id)->ticket_comment;
             if(isset($comment)) {
-                $mail_subject = str_replace(array("[reply]"), array($comment ?? ""), $mail_subject);
+                $mail_subject = str_replace(["[reply]"], [$comment ?? ""], $mail_subject);
             }
         }
         return $mail_subject;
@@ -247,20 +247,20 @@ class MailTemplate extends Model
         $ticket = Ticket::find($comment->ticket_id);
         $mail_body = $template_info->admin_agent_mail_body;
 
-        $mail_body = str_replace(array("EMAIL_ADDRESS"), array($email ?? ""), $mail_body);
-        $mail_body = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_body);
-        $mail_body = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_body);
-        $mail_body = str_replace(array("[ticket_description]"), array($ticket->ticket_content ?? ""), $mail_body);
-        $mail_body = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_body);
-        $mail_body = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_body);
-        $mail_body = str_replace(array("[user_type]"), array(authUserType()), $mail_body);
-        $mail_body = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_body);
+        $mail_body = str_replace(["EMAIL_ADDRESS"], [$email ?? ""], $mail_body);
+        $mail_body = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_body);
+        $mail_body = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_body);
+        $mail_body = str_replace(["[ticket_description]"], [$ticket->ticket_content ?? ""], $mail_body);
+        $mail_body = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_body);
+        $mail_body = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_body);
+        $mail_body = str_replace(["[user_type]"], [authUserType()], $mail_body);
+        $mail_body = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_body);
         if(!empty($comment)) {
             $comment = TicketReplyComment::find($comment->id)->ticket_comment;
             if(isset($comment)) {
-                $mail_body = str_replace(array("[reply]"), array($comment ?? ""), $mail_body);
+                $mail_body = str_replace(["[reply]"], [$comment ?? ""], $mail_body);
             }
         }
         return $mail_body;
@@ -274,16 +274,16 @@ class MailTemplate extends Model
         $ticket = Ticket::find($ticket_id);
         $mail_subject = $template_info->admin_agent_mail_subject;
         $user = User::where('email',$email)->first();
-        $mail_subject = str_replace(array("agent_name"), array($user->full_name ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_subject);
-        $mail_subject = str_replace(array("[ticket_description]"), array($ticket->ticket_content ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_subject);
-        $mail_subject = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_subject);
-        $mail_subject = str_replace(array("[user_type]"), array(authUserType()), $mail_subject);
-        $mail_subject = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_subject);
+        $mail_subject = str_replace(["agent_name"], [$user->full_name ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_subject);
+        $mail_subject = str_replace(["[ticket_description]"], [$ticket->ticket_content ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_subject);
+        $mail_subject = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_subject);
+        $mail_subject = str_replace(["[user_type]"], [authUserType()], $mail_subject);
+        $mail_subject = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_subject);
         return $mail_subject;
     }
 
@@ -296,16 +296,16 @@ class MailTemplate extends Model
         $mail_body = $template_info->admin_agent_mail_body;
         $user = User::where('email',$email)->first();
 
-        $mail_body = str_replace(array("[agent_name]"), array($user->full_name ?? ""), $mail_body);
-        $mail_body = str_replace(array("[ticket_subject]"), array($ticket->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[ticket_no]"), array($ticket->ticket_no ?? ""), $mail_body);
-        $mail_body = str_replace(array("[priority]"), array(ticketPriority($ticket->priority)), $mail_body);
-        $mail_body = str_replace(array("[ticket_description]"), array($ticket->ticket_content ?? ""), $mail_body);
-        $mail_body = str_replace(array("[product_name]"), array($ticket->getProductCategory->title ?? ""), $mail_body);
-        $mail_body = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_body);
-        $mail_body = str_replace(array("[customer_name]"), array(getUserName($ticket->customer_id)), $mail_body);
-        $mail_body = str_replace(array("[user_type]"), array(authUserType()), $mail_body);
-        $mail_body = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_body);
+        $mail_body = str_replace(["[agent_name]"], [$user->full_name ?? ""], $mail_body);
+        $mail_body = str_replace(["[ticket_subject]"], [$ticket->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[ticket_no]"], [$ticket->ticket_no ?? ""], $mail_body);
+        $mail_body = str_replace(["[priority]"], [ticketPriority($ticket->priority)], $mail_body);
+        $mail_body = str_replace(["[ticket_description]"], [$ticket->ticket_content ?? ""], $mail_body);
+        $mail_body = str_replace(["[product_name]"], [$ticket->getProductCategory->title ?? ""], $mail_body);
+        $mail_body = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_body);
+        $mail_body = str_replace(["[customer_name]"], [getUserName($ticket->customer_id)], $mail_body);
+        $mail_body = str_replace(["[user_type]"], [authUserType()], $mail_body);
+        $mail_body = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_body);
         return $mail_body;
     }
 
@@ -330,12 +330,12 @@ class MailTemplate extends Model
         }
 
         $user = User::where('email',$email)->first();
-        $mail_data = str_replace(array("[agent_name]"), array($user->full_name ?? ""), $mail_data);
-        $mail_data = str_replace(array("[product_name]"), array(ProductCategory::find($group->product_id)->title ?? ""), $mail_data);
-        $mail_data = str_replace(array("[site_name]"), array(siteSetting()->company_name ?? ""), $mail_data);
-        $mail_data = str_replace(array("[customer_name]"), array(getUserName($user->full_name)), $mail_data);
-        $mail_data = str_replace(array("[user_type]"), array(authUserType()), $mail_data);
-        $mail_data = str_replace(array("[date_time]"), array(currentDate().' at '.currentTime()), $mail_data);
+        $mail_data = str_replace(["[agent_name]"], [$user->full_name ?? ""], $mail_data);
+        $mail_data = str_replace(["[product_name]"], [ProductCategory::find($group->product_id)->title ?? ""], $mail_data);
+        $mail_data = str_replace(["[site_name]"], [siteSetting()->company_name ?? ""], $mail_data);
+        $mail_data = str_replace(["[customer_name]"], [getUserName($user->full_name)], $mail_data);
+        $mail_data = str_replace(["[user_type]"], [authUserType()], $mail_data);
+        $mail_data = str_replace(["[date_time]"], [currentDate().' at '.currentTime()], $mail_data);
         return $mail_data;
     }
 }

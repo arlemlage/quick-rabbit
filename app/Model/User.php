@@ -373,7 +373,7 @@ class User extends Authenticatable
         UserVerify::updateOrInsert(['user_id' => $user->id],['user_id' => $user->id, 'token' => $token]);
         
         $mail_data = [
-            'to' => array($email),
+            'to' => [$email],
             'user_name' => $user->full_name,
             'token' => $token,
             'subject' => 'Email verification link',

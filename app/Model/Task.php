@@ -25,7 +25,7 @@ class Task extends Model
     use HasFactory;
     protected $table = 'tbl_tasks';
     protected $guarded = [];
-    protected $appends = array('bg_color');
+    protected $appends = ['bg_color'];
 
     /**
      * Get work date attribute to append

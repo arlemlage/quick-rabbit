@@ -294,14 +294,14 @@ class CustomersController extends Controller
                     'email' => $request->email
                 ]);
             } else {
-                $obj->update(array('email' => $request->email));
+                $obj->update(['email' => $request->email]);
                 User::sendVerificationEmail($request->email);
                 $obj->is_email_verified = 0;
             }
         }
 
         if (!empty($request->note) && !empty($request->note[0])){
-            CustomerNote::whereIn('customer_id',array($id))->delete();
+            CustomerNote::whereIn('customer_id',[$id])->delete();
             foreach($request->note as $n){
                 $customer_note = new CustomerNote();
                 $customer_note->customer_id = $id;
@@ -346,7 +346,7 @@ class CustomersController extends Controller
         $customer->plain_password = $generated_password;
 
         $mail_data = [
-            'to' => array('name'=>"",'email'=>$customer->email),
+            'to' => ['name'=>"",'email'=>$customer->email],
             'subject' => "Temporary login credentials",
             'user_name' => $customer->full_name,
             'body' => 'Your temporary login credentials have been given below. Please login into your account and change your password.',

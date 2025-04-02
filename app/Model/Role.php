@@ -36,7 +36,7 @@ class Role extends Model
     /**
      * Append extra field
      */
-    protected $appends = array('menu_ids','activity_ids');
+    protected $appends = ['menu_ids','activity_ids'];
 
     /**
      * Get menu ids

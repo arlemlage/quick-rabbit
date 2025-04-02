@@ -3,12 +3,12 @@
 use Illuminate\Support\Str;
 
 
-$db['default'] = array(
+$db['default'] = [
 	'hostname' => 'localhost',
 	'username' => 'u209993987_user_op_rabbit',
 	'password' => 'R2d2cpo2@',
 	'database' => 'u209993987_opnium_rabbit'
-);
+];
 
 return [
 

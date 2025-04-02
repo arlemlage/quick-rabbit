@@ -196,7 +196,7 @@ class RecurringPaymentController extends Controller
         }
         $total_dates = count($payment_dates);
         $loop_count = (int) $total_dates / $request->payment_period_in_days;
-        RecurringPaymentDate::whereIn('recurring_id',array($row->id))->delete();
+        RecurringPaymentDate::whereIn('recurring_id',[$row->id])->delete();
         $date = $payment_dates[0];
         for($i=0;$i<$loop_count;$i++) {
             $r_d = new RecurringPaymentDate();

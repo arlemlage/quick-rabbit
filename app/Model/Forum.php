@@ -26,7 +26,7 @@ class Forum extends Model
     protected $table = "tbl_forums";
     protected $guarded = [];
     public $timestamps = true;
-    protected $appends = array('last_reply', 'last_four_reply');
+    protected $appends = ['last_reply', 'last_four_reply'];
 
     /**
      * get Last Reply
