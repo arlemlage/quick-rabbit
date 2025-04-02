@@ -33,7 +33,7 @@ class Attendance extends Model
      * @var string
      */
     protected $guarded = [];
-    protected $appends = array('display_hours');
+    protected $appends = ['display_hours'];
 
      /**
      * Display hours

@@ -465,7 +465,7 @@ if (!function_exists('isVacationToday')) {
                 'note' => $vacation->note,
             ];
         } else {
-            return array('status' => false);
+            return ['status' => false];
         }
     }
 }
@@ -632,7 +632,7 @@ if (!function_exists('titleConverter')) {
 if (!function_exists('getDomainExtensions')) {
     function getDomainExtensions(): array
     {
-        return array('.com', '.com.bd', '.aero', '.asia', '.biz', '.cat', '.coop', '.edu', '.gov', '.gov.bd', '.info', '.int', '.jobs', '.mil', '.mobi', '.museum', '.name', '.net', '.org', '.pro', '.tel', '.travel', '.co', '.co.uk');
+        return ['.com', '.com.bd', '.aero', '.asia', '.biz', '.cat', '.coop', '.edu', '.gov', '.gov.bd', '.info', '.int', '.jobs', '.mil', '.mobi', '.museum', '.name', '.net', '.org', '.pro', '.tel', '.travel', '.co', '.co.uk'];
     }
 }
 
@@ -779,23 +779,23 @@ if (!function_exists('number_to_words')) {
         $num = (string) ((int) $num);
 
         if ((int) ($num) && ctype_digit($num)) {
-            $words = array();
+            $words = [];
 
-            $num = str_replace(array(',', ' '), '', trim($num));
+            $num = str_replace([',', ' '], '', trim($num));
 
-            $list1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+            $list1 = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
                 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-                'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
+                'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
 
-            $list2 = array('', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty',
-                'seventy', 'eighty', 'ninety', 'hundred');
+            $list2 = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty',
+                'seventy', 'eighty', 'ninety', 'hundred'];
 
-            $list3 = array('', 'thousand', 'million', 'billion', 'trillion',
+            $list3 = ['', 'thousand', 'million', 'billion', 'trillion',
                 'quadrillion', 'quintillion', 'sextillion', 'septillion',
                 'octillion', 'nonillion', 'decillion', 'undecillion',
                 'duodecillion', 'tredecillion', 'quattuordecillion',
                 'quindecillion', 'sexdecillion', 'septendecillion',
-                'octodecillion', 'novemdecillion', 'vigintillion');
+                'octodecillion', 'novemdecillion', 'vigintillion'];
 
             $num_length = strlen($num);
             $levels = (int) (($num_length + 2) / 3);
@@ -985,15 +985,15 @@ if (!function_exists('encrypt_decrypt')) {
             return false;
         }
         if ($type == 'decrypt') {
-            $en_slash_added1 = trim(str_replace(array('tcktly'), '/', $key));
-            $en_slash_added = trim(str_replace(array('dstcktly'), '%', $en_slash_added1));
+            $en_slash_added1 = trim(str_replace(['tcktly'], '/', $key));
+            $en_slash_added = trim(str_replace(['dstcktly'], '%', $en_slash_added1));
             $key_value = $return = openssl_decrypt($en_slash_added, "AES-128-ECB", $str_rand);
             return $key_value;
 
         } elseif ($type == 'encrypt') {
             $key_value = openssl_encrypt($key, "AES-128-ECB", $str_rand);
-            $en_slash_remove1 = trim(str_replace(array('/'), 'tcktly', $key_value));
-            $en_slash_remove = trim(str_replace(array('%'), 'dstcktly', $en_slash_remove1));
+            $en_slash_remove1 = trim(str_replace(['/'], 'tcktly', $key_value));
+            $en_slash_remove = trim(str_replace(['%'], 'dstcktly', $en_slash_remove1));
             return $en_slash_remove;
         }
         return false;
@@ -1125,7 +1125,7 @@ if (!function_exists('uploadedFileSize')) {
         if ($size > 0) {
             $size = (int) $size;
             $base = log($size) / log(1024);
-            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+            $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
             return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
         }
         return $size;
@@ -1220,7 +1220,7 @@ if (!function_exists('imageWidthHeight')) {
         $img_size_array = getimagesize($image);
         $width = $img_size_array[0];
         $height = $img_size_array[1];
-        return array('width' => $width, 'height' => $height);
+        return ['width' => $width, 'height' => $height];
     }
 }
 
@@ -2012,7 +2012,7 @@ function getAIDatabaseSearch($filter)
  */
 function reset_unused_text($str)
 {
-    $searchArray = array("<p><br />", "<p><br />", "Hi there,", "Hi,", "Hello,", "Hello Sir,", "Hello sir,");
+    $searchArray = ["<p><br />", "<p><br />", "Hi there,", "Hi,", "Hello,", "Hello Sir,", "Hello sir,"];
     $resultString = str_replace($searchArray, "", $str);
     return ($resultString);
 }
@@ -2600,7 +2600,7 @@ if (!function_exists('getPlainText')) {
     function getPlainText($text)
     {
         if ($text) {
-            $res = trim(str_replace(array('\'', '"', '`', ',', ';', '<', '>', '(', ')', '{', '}', '[', ']', '$', '%', '#', '/', '@', '&'), ' ', $text));
+            $res = trim(str_replace(['\'', '"', '`', ',', ';', '<', '>', '(', ')', '{', '}', '[', ']', '$', '%', '#', '/', '@', '&'], ' ', $text));
             $tmp_text = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $res)));
             $final_txt = preg_replace("/[\n\r]/", " ", escape_output($tmp_text)); #remove new line from address
             return $final_txt;
@@ -2618,7 +2618,7 @@ if (!function_exists('saveJsonText')) {
     function saveJsonText($text)
     {
         if ($text) {
-            $res = trim(str_replace(array('"'), ' ', $text));
+            $res = trim(str_replace(['"'], ' ', $text));
             $tmp_text = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $res)));
             $final_txt = preg_replace("/[\n\r]/", " ", escape_output($tmp_text)); #remove new line from address
             return $final_txt;
@@ -2758,7 +2758,7 @@ if (!function_exists('getPreviousMonthName')) {
     function getPreviousMonthName($number)
     {
         $current_month = date('m');
-        $previous_six_months = array();
+        $previous_six_months = [];
         $current_month_number = date('m');
         $current_year = date('Y');
         $dateTime = new DateTime();
@@ -2789,7 +2789,7 @@ if (!function_exists('checkFileType')) {
 
         if ($file_extension === "pdf") {
             return "PDF";
-        } elseif (in_array($file_extension, array("png", "jpg", "jpeg", "gif", "bmp"))) {
+        } elseif (in_array($file_extension, ["png", "jpg", "jpeg", "gif", "bmp"])) {
             return "Image";
         } elseif ($file_extension === "zip") {
             return "ZIP";

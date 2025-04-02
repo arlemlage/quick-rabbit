@@ -69,7 +69,7 @@ class ProfileController extends Controller
                     'email' => $request->email
                 ]);
             } else {
-                $admin->update(array('email' => $request->email));
+                $admin->update(['email' => $request->email]);
                 User::sendVerificationEmail($request->email);
                 $admin->is_email_verified = 0;
             }
@@ -81,7 +81,7 @@ class ProfileController extends Controller
                     'mobile' => $request->mobile
                 ]);
             } else {
-                $admin->update(array('mobile' => $request->mobile));
+                $admin->update(['mobile' => $request->mobile]);
             }
         }
         if(!empty($request->image_url)) {

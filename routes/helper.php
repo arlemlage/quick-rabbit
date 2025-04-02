@@ -128,7 +128,7 @@ Route::get('browser-push',function () {
 
 Route::get('insert-index',function() {
     foreach( Article::all() as $article) {
-        Article::find($article->id)->update(array('tag_ids' => null));
+        Article::find($article->id)->update(['tag_ids' => null]);
     }
 });
 

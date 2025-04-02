@@ -27,7 +27,7 @@ class Blog extends Model
     use SearchableTrait;
     protected $table = "tbl_blogs";
     protected $guarded = [];
-    protected $appends = array('tags','type');
+    protected $appends = ['tags','type'];
     public $timestamps = true;
 
     protected $searchable = [

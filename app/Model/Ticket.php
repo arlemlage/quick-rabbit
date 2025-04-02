@@ -31,8 +31,8 @@ class Ticket extends Model
     protected $table = "tbl_tickets";
     protected $guarded = [];
     public    $timestamps = true;
-    protected $appends = array('agent_ids_in_array','assign_agent_names','last_comment','ticket_duration');
-    protected $observables = array('notifyAdminAgent','notifyAgentCustomer','notifyAdminCustomer','closeTicket','reopenTicket','assignAgent');
+    protected $appends = ['agent_ids_in_array','assign_agent_names','last_comment','ticket_duration'];
+    protected $observables = ['notifyAdminAgent','notifyAgentCustomer','notifyAdminCustomer','closeTicket','reopenTicket','assignAgent'];
 
     /**
      * Fire observer when opened by customer
@@ -241,7 +241,7 @@ class Ticket extends Model
              if (isset($email_info) && count($new_agent_emails) && !empty($email_info['admin_agent_mail_subject']) && !empty($email_info['admin_agent_mail_body'])) {
                  foreach ($new_agent_emails as $email) {
                      $mail_data = [
-                        'to' => array($email),
+                        'to' => [$email],
                         'subject' => MailTemplate::assignAgentMailSubject($email,$ticket_id),
                         'body' => MailTemplate::assignAgentMailBody($email,$ticket_id),
                         'ticket_id' => encrypt_decrypt($ticket->id, 'encrypt'),

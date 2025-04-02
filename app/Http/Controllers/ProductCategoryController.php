@@ -90,7 +90,7 @@ class ProductCategoryController extends Controller
             }
             $image_info = imageInfo($image);
 
-            $allowed_extension = array('jpg', 'jpeg', 'png');
+            $allowed_extension = ['jpg', 'jpeg', 'png'];
 
             if (!in_array($image_info['extension'], $allowed_extension)) {
                 return redirect()->back()->with('photo_thumb', 'The Photo Thumbnail should be type of jpg, jpeg or png.');
@@ -164,7 +164,7 @@ class ProductCategoryController extends Controller
             }
             $image_info = imageInfo($image);
 
-            $allowed_extension = array('jpg', 'jpeg', 'png');
+            $allowed_extension = ['jpg', 'jpeg', 'png'];
 
             if (!in_array($image_info['extension'], $allowed_extension)) {
                 return redirect()->back()->with('photo_thumb', 'The Photo Thumbnail should be type of jpg, jpeg or png.');

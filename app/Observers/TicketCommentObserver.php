@@ -167,7 +167,7 @@ class TicketCommentObserver
             $cc_email = explode(',',$ticket_info->ticket_cc);
             foreach ($cc_email as $email) {
                 $mail_data = [
-                    'to' => array($email),
+                    'to' => [$email],
                     'subject' => MailTemplate::ccMailSubject($email,$ticketReplyComment),
                     'body' => MailTemplate::ccMailBody($email,$ticketReplyComment),
                     'view' => 'cc-mail-template',

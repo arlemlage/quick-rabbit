@@ -151,7 +151,7 @@ class CustomFieldController extends Controller
      */
     public function destroy($id)
     {
-        CustomField::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(array('del_status' => 'DELETED'));
+        CustomField::findOrFail(encrypt_decrypt($id, 'decrypt'))->update(['del_status' => 'DELETED']);
         return redirect()->route('custom-fields.index')->with(deleteMessage());
     }
 }

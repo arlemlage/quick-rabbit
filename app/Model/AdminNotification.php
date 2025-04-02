@@ -24,7 +24,7 @@ class AdminNotification extends Model
 {
     protected $table = "tbl_admin_notifications";
     protected $guarded = [];
-    protected $appends = array('details_link','delete_link','seen_link','creation_date','ticket_title','bg_color');
+    protected $appends = ['details_link','delete_link','seen_link','creation_date','ticket_title','bg_color'];
 
     /**
      * Get the details link

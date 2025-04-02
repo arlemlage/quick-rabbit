@@ -181,7 +181,7 @@ class DashboardController extends Controller
                 return $row;
             });
 
-        $data_arr = array();
+        $data_arr = [];
         foreach ($tickets as $key => $value) {
 
             $html_action = '<div class="d-flex action_flex">';
@@ -239,7 +239,7 @@ class DashboardController extends Controller
             $updated_at = $value->updated_at->format('M d, y h:i:s');
             $last_commented_by = $value->last_comment;
 
-            $data_arr[] = array(
+            $data_arr[] = [
                 "sn" => $key + 1,
                 "ticket_id" => $ticket_number,
                 "title" => $ticket_title,
@@ -249,15 +249,15 @@ class DashboardController extends Controller
                 "updated_at" => $updated_at,
                 "last_commented_by" => $last_commented_by,
                 "action" => $html_action,
-            );
+            ];
         }
 
-        $response = array(
+        $response = [
             "draw" => intval($draw),
             "iTotalRecords" => 0,
             "iTotalDisplayRecords" => $total_object->count(),
             "aaData" => $data_arr,
-        );
+        ];
 
         echo json_encode($response);
     }

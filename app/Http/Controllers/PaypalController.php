@@ -122,7 +122,7 @@ class PaypalController extends Controller
                     ];
                     Transaction::updateOrInsert($identify,$data);
 
-                    Ticket::find(Session::get('ticket_id'))->update(array('payment_status' => 'Paid'));
+                    Ticket::find(Session::get('ticket_id'))->update(['payment_status' => 'Paid']);
                 }
             }
             return redirect()

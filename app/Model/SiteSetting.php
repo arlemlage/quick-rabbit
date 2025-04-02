@@ -26,7 +26,7 @@ class SiteSetting extends Model
     protected $table = "tbl_site_settings";
     protected $guarded = [];
     public $timestamps = true;
-    protected $append = array('banner');
+    protected $append = ['banner'];
 
     /**
      * Call boot method

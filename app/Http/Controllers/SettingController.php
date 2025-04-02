@@ -150,7 +150,7 @@ class SettingController extends Controller
             }
             $image_info = imageInfo($logo);
 
-            $allowed_extension = array('jpg','jpeg','png');
+            $allowed_extension = ['jpg','jpeg','png'];
 
             if(! in_array($image_info['extension'],$allowed_extension)) {
                 return redirect()->back()->with('logo_error','The Logo should be type of jpg, jpeg or png.');
@@ -346,7 +346,7 @@ class SettingController extends Controller
         }
         
         if ($chat_setting_info->save()){    
-            ConfigurationSetting::first()->update(array('chat_setting' => true));        
+            ConfigurationSetting::first()->update(['chat_setting' => true]);        
             return redirect('chat-setting')->with(updateMessage());
         }else{
             Session::flash('error', ' Information has not been stored successfully. Error!');
@@ -373,7 +373,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateChatAgent(Request $request) {
-        ProductCategory::find($request->product_id)->update(array('first_chat_agent_id' => $request->agent_id));
+        ProductCategory::find($request->product_id)->update(['first_chat_agent_id' => $request->agent_id]);
         return redirect()->route('chat-sequence-setting')->with(updateMessage());
     }
     /**
@@ -486,7 +486,7 @@ class SettingController extends Controller
             } else {
                 file_put_contents(base_path('assets/json/smtp.json'), stripslashes($newJsonString));
             }
-            ConfigurationSetting::first()->update(array('mail_setting' => true));
+            ConfigurationSetting::first()->update(['mail_setting' => true]);
             return redirect()->back()->with(saveMessage());
         }else{
             return redirect()->back()->with(waringMessage());
@@ -601,7 +601,7 @@ class SettingController extends Controller
         } else {
             file_put_contents(base_path('assets/json/paypal.json'), stripslashes($paypalJsonString));
         }
-        ConfigurationSetting::first()->update(array('payment_gateway_setting' => true));
+        ConfigurationSetting::first()->update(['payment_gateway_setting' => true]);
         return redirect()->route('payment-gateway-setting')->with(updateMessage());
     }
 
@@ -648,36 +648,36 @@ class SettingController extends Controller
         $social_setting->google_client_id = $request->google_client_id ?? 'google_client_id';
         $social_setting->google_client_secret = $request->google_client_secret ?? 'google_client_secret';
         if($request->google_login) {
-            ConfigurationSetting::first()->update(array('google_login' => true));
+            ConfigurationSetting::first()->update(['google_login' => true]);
         } else {
-            ConfigurationSetting::first()->update(array('google_login' => false));
+            ConfigurationSetting::first()->update(['google_login' => false]);
         }
 
         $social_setting->github_login = $request->github_login ?? "Inactive";
         $social_setting->github_client_id = $request->github_client_id ?? 'github_client_id';
         $social_setting->github_client_secret = $request->github_client_secret ?? 'github_client_secret';
         if($request->github_login) {
-            ConfigurationSetting::first()->update(array('github_login' => true));
+            ConfigurationSetting::first()->update(['github_login' => true]);
         } else {
-            ConfigurationSetting::first()->update(array('github_login' => false));
+            ConfigurationSetting::first()->update(['github_login' => false]);
         }
 
         $social_setting->linkedin_login = $request->linkedin_login ?? "Inactive";
         $social_setting->linkedin_client_id = $request->linkedin_client_id ?? 'linkedin_client_id';
         $social_setting->linkedin_client_secret = $request->linkedin_client_secret ?? 'linkedin_client_secret';
         if($request->linkedin_login) {
-            ConfigurationSetting::first()->update(array('linkedin_login' => true));
+            ConfigurationSetting::first()->update(['linkedin_login' => true]);
         } else {
-            ConfigurationSetting::first()->update(array('linkedin_login' => false));
+            ConfigurationSetting::first()->update(['linkedin_login' => false]);
         }
 
         $social_setting->envato_login = $request->envato_login ?? "Inactive";
         $social_setting->envato_client_id = $request->envato_client_id ?? 'envato_client_id';
         $social_setting->envato_client_secret = $request->envato_client_secret ?? 'envato_client_secret';
         if($request->envato_login) {
-            ConfigurationSetting::first()->update(array('envato_login' => true));
+            ConfigurationSetting::first()->update(['envato_login' => true]);
         } else {
-            ConfigurationSetting::first()->update(array('envato_login' => false));
+            ConfigurationSetting::first()->update(['envato_login' => false]);
         }
 
         // Save as json
@@ -781,7 +781,7 @@ class SettingController extends Controller
         }
 
         if(isset($request->browser_notification) && $request->browser_notification == 1) {
-            SiteSetting::first()->update(array('browser_notification' => 'Yes'));
+            SiteSetting::first()->update(['browser_notification' => 'Yes']);
             $firebase_data['api_key'] = saveJsonText($request->api_key);
             $firebase_data['auth_domain'] = saveJsonText($request->auth_domain);
             $firebase_data['project_id'] = saveJsonText($request->project_id);
@@ -802,10 +802,10 @@ class SettingController extends Controller
             }
             
         } else {
-            SiteSetting::first()->update(array('browser_notification' => 'No'));
+            SiteSetting::first()->update(['browser_notification' => 'No']);
         }
 
-        ConfigurationSetting::first()->update(array('notification_setting' => true));  
+        ConfigurationSetting::first()->update(['notification_setting' => true]);  
 
         if (!empty($request->disable_notifications) && ($request->disable_notifications=='1')){
             foreach (MailTemplate::all() as $template) {

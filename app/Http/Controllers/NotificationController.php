@@ -98,14 +98,14 @@ class NotificationController extends Controller
             $id = encrypt_decrypt($id, 'decrypt');
         } 
         if(authUserRole() == 1) {
-            AdminNotification::where('id',$id)->update(array('del_status' => 'DELETED'));
+            AdminNotification::where('id',$id)->update(['del_status' => 'DELETED']);
         } elseif(authUserRole() == 2) {
-            AgentNotification::where('id',$id)->update(array('del_status' => 'DELETED'));
+            AgentNotification::where('id',$id)->update(['del_status' => 'DELETED']);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::where('id',$id)->update(array('del_status' => 'DELETED'));
+            CustomerNotification::where('id',$id)->update(['del_status' => 'DELETED']);
         }
         if(request()->ajax()){
-            return response()->json(array('status' => true,'unread_count' => showTotalNotification()));
+            return response()->json(['status' => true,'unread_count' => showTotalNotification()]);
         } else {
             return redirect()->back()->with(deleteMessage());
         }
@@ -120,14 +120,14 @@ class NotificationController extends Controller
             $id = encrypt_decrypt($id, 'decrypt');
         } 
         if(authUserRole() == 1) {
-            AdminNotification::find($id)->update(array('mark_as_read_status' => 1));
+            AdminNotification::find($id)->update(['mark_as_read_status' => 1]);
         } elseif(authUserRole() == 2) {
-            AgentNotification::find($id)->update(array('mark_as_read_status' => 1));
+            AgentNotification::find($id)->update(['mark_as_read_status' => 1]);
         } elseif (authUserRole() == 3) {
-            CustomerNotification::find($id)->update(array('mark_as_read_status' => 1));
+            CustomerNotification::find($id)->update(['mark_as_read_status' => 1]);
         }
         if(request()->ajax()){
-            return response()->json(array('status' => true));
+            return response()->json(['status' => true]);
         } else {
             return redirect()->back()->with(updateMessage());
         }
@@ -229,21 +229,21 @@ class NotificationController extends Controller
         $ids = $request->notification_ids;
         if(authUserRole() == 1) {
             if(isset($ids)) {
-                AdminNotification::whereIn('id',$ids)->update(array('mark_as_read_status' => 1)); 
+                AdminNotification::whereIn('id',$ids)->update(['mark_as_read_status' => 1]); 
             } else {
-                AdminNotification::query()->update(array('mark_as_read_status' => 1));
+                AdminNotification::query()->update(['mark_as_read_status' => 1]);
             }
         } elseif(authUserRole() == 2) {
             if(isset($ids)) {
-                AgentNotification::whereIn('id',$ids)->update(array('mark_as_read_status' => 1));
+                AgentNotification::whereIn('id',$ids)->update(['mark_as_read_status' => 1]);
             } else {
-                AgentNotification::where('agent_for',authUserId())->update(array('mark_as_read_status' => 1));
+                AgentNotification::where('agent_for',authUserId())->update(['mark_as_read_status' => 1]);
             }
         } elseif (authUserRole() == 3) {
             if(isset($ids)) {
-                CustomerNotification::whereIn('id',$ids)->update(array('mark_as_read_status' => 1));
+                CustomerNotification::whereIn('id',$ids)->update(['mark_as_read_status' => 1]);
             } else {
-                CustomerNotification::where('customer_for',authUserId())->update(array('mark_as_read_status' => 1));
+                CustomerNotification::where('customer_for',authUserId())->update(['mark_as_read_status' => 1]);
             }
         }
         return response()->json(['status' => true]);
@@ -256,21 +256,21 @@ class NotificationController extends Controller
         $ids = $request->notification_ids;
         if(authUserRole() == 1) {
             if(isset($ids) && !empty($ids)) {
-                AdminNotification::whereIn('id',$ids)->update(array('del_status' => 'DELETED'));
+                AdminNotification::whereIn('id',$ids)->update(['del_status' => 'DELETED']);
             } else {
-                AdminNotification::query()->update(array('del_status' => 'DELETED'));
+                AdminNotification::query()->update(['del_status' => 'DELETED']);
             }
         } elseif(authUserRole() == 2) {
             if(isset($ids) && !empty($ids)) {
-                AgentNotification::whereIn('id',$ids)->update(array('del_status' => 'DELETED'));
+                AgentNotification::whereIn('id',$ids)->update(['del_status' => 'DELETED']);
             } else {
-                AgentNotification::where('agent_for',authUserId())->update(array('del_status' => 'DELETED'));
+                AgentNotification::where('agent_for',authUserId())->update(['del_status' => 'DELETED']);
             }
         } elseif (authUserRole() == 3) {
             if(isset($ids) && !empty($ids)) {
-                CustomerNotification::whereIn('id',$ids)->update(array('del_status' => 'DELETED'));
+                CustomerNotification::whereIn('id',$ids)->update(['del_status' => 'DELETED']);
             } else {
-                CustomerNotification::where('customer_for',authUserId())->update(array('del_status' => 'DELETED'));
+                CustomerNotification::where('customer_for',authUserId())->update(['del_status' => 'DELETED']);
             }
         }
         return response()->json(['status' => true]);

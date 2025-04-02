@@ -140,7 +140,7 @@ class RoleController extends Controller
         $role->save();
         $activity_ids = $request->activity_id;
         if(isset($activity_ids)) {
-            RolePermission::whereIn('role_id',array($role->id))->delete();
+            RolePermission::whereIn('role_id',[$role->id])->delete();
             foreach ($activity_ids as $activity_id) {
                 $menu_id = MenuActivity::find($activity_id)->menu_id;
                 $request_activity = [
@@ -176,7 +176,7 @@ class RoleController extends Controller
         if(User::where('permission_role',$role->id)->exists()) {
             return redirect()->route('role.index')->with(errorMessage($role->title." has been assigned to an agent.update first"));
         }else {
-            RolePermission::whereIn('role_id',array($role->id))->delete();
+            RolePermission::whereIn('role_id',[$role->id])->delete();
             $role->delete();
             return redirect()->route('role.index')->with(errorMessage());
         }

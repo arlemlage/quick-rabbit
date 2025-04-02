@@ -152,7 +152,7 @@ class TicketActivityController extends Controller
         $obj->orderBy('created_at', 'DESC');
         $tickets = $obj->get();
 
-        $data_arr = array();
+        $data_arr = [];
         foreach ($tickets as $value) {
 
             $html_action = '<div class="d-flex gap8">';
@@ -214,7 +214,7 @@ class TicketActivityController extends Controller
             $flag_link = '<a href="' . (url('flag-ticket/' . encrypt_decrypt($value->id, 'encrypt'))) . '"><i class="fa fa-flag ' . (($value->flag_status == 1) ? 'text-danger' : '') . '" aria-hidden="true"></i></a>';
 
             if (authUserRole() == 3) {
-                $data_arr[] = array(
+                $data_arr[] = [
                     "ticket_number" => $ticket_number,
                     "title" => $ticket_title,
                     "product_category" => $product_category,
@@ -223,9 +223,9 @@ class TicketActivityController extends Controller
                     "last_commented_by" => $last_commented_by,
                     "status" => $status,
                     "action" => $html_action,
-                );
+                ];
             } else {
-                $data_arr[] = array(
+                $data_arr[] = [
                     "ticket_number" => $ticket_number,
                     "title" => $ticket_title,
                     "product_category" => $product_category,
@@ -236,16 +236,16 @@ class TicketActivityController extends Controller
                     "flag" => $flag_link,
                     "status" => $status,
                     "action" => $html_action,
-                );
+                ];
             }
         }
 
-        $response = array(
+        $response = [
             "draw" => intval($draw),
             "iTotalRecords" => 0,
             "iTotalDisplayRecords" => $total_object->count(),
             "aaData" => $data_arr,
-        );
+        ];
         echo json_encode($response);
     }
 
@@ -655,7 +655,7 @@ class TicketActivityController extends Controller
         $ticket = Ticket::find($request->ticket_id);
         $ticket->ticket_cc = $request->cc_email;
         $ticket->save();
-        return response()->json(array('status' => true, 'ticket_cc' => Ticket::find($request->ticket_id)->ticket_cc));
+        return response()->json(['status' => true, 'ticket_cc' => Ticket::find($request->ticket_id)->ticket_cc]);
     }
 
     /**
@@ -815,7 +815,7 @@ class TicketActivityController extends Controller
         if ($request->is_paid == "Yes") {
             $ticket_title = $ticket->title;
             $mail_data = [
-                'to' => array($ticket->getCustomer->email),
+                'to' => [$ticket->getCustomer->email],
                 'subject' => "Ticket marked as paid support",
                 'user_name' => $ticket->getCustomer->full_name,
                 'body' => 'Your ticket ' . $ticket->ticket_id . ' has been marked as paid support and charge amount is $' . $request->amount . '.',
@@ -883,7 +883,7 @@ class TicketActivityController extends Controller
         ChatGroup::findOrFail($group->id)->update(['last_message_at' => now()]);
         $email = User::where('id', $ticket->customer_id)->first()->email;
         $mail_data = [
-            'to' => array($email),
+            'to' => [$email],
             'subject' => "A new chat has been open.",
             'body' => "An admin/agent has been open a new chat " . $group->name . ' for you.Please login to the site and check your inbox',
             'view' => 'cc-mail-template',

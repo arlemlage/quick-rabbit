@@ -25,7 +25,7 @@ class BlogComment extends Model
     use HasFactory;
     protected $table = "tbl_blog_comments";
     protected $guarded = [];
-    protected $appends = array('user_image','user_type');
+    protected $appends = ['user_image','user_type'];
 
     /**
      * Get user image attribute to append

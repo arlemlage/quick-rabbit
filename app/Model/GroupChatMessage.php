@@ -26,7 +26,7 @@ class GroupChatMessage extends Model
 {
     protected $table = "tbl_group_chat_messages";
     protected $guarded = [];
-    protected $appends = array('message_type','message_time','is_link','is_file','is_image');
+    protected $appends = ['message_type','message_time','is_link','is_file','is_image'];
 
     /**
      * Get message type attribute to append

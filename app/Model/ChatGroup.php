@@ -25,7 +25,7 @@ class ChatGroup extends Model
 {
     protected $table = "tbl_chat_groups";
     protected $guarded = [];
-    protected $appends = array('last_message','pair_key','image','members','agent_online');
+    protected $appends = ['last_message','pair_key','image','members','agent_online'];
 
     /**
      * Get last message attribute to append
