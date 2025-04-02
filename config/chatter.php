@@ -131,7 +131,7 @@ return [
     */
 
     'user' => [
-        'namespace'                     => 'App\Model\User',
+        'namespace'                     => App\Model\User::class,
         'database_field_with_user_name' => 'name',
         'relative_url_to_profile'       => '',
         'relative_url_to_image_assets'  => '',
